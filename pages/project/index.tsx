@@ -11,7 +11,6 @@ import { nanoid } from "nanoid";
 const Pmgmt: React.FC<any> = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
   const [open, setOpen] = useState<boolean>(false);
   const [dbName, setDbName] = useState<string>("Name");
   const [notStarted, setNotStarted] = useState<ProjectTask[]>([]);
@@ -147,7 +146,7 @@ const Pmgmt: React.FC<any> = () => {
   return (
     <>
       <Head>
-        <title>{dbName}</title>
+        <title>{dbName} - Project</title>
       </Head>
       <div className="m-5">
         <h1 className="m-1 text-white font-bold text-3xl">{dbName}</h1>
