@@ -18,12 +18,7 @@ const Notes: React.FC<any> = () => {
     if (id) {
       axios
         .get<any>(
-          `https://pdb-api.eu-gb.cf.appdomain.cloud/database/public/${id}`,
-          {
-            headers: {
-              "auth-token": localStorage.getItem("token"),
-            },
-          }
+          `https://pdb-api.eu-gb.cf.appdomain.cloud/database/public/${id}`
         )
         .then((res) => {
           console.dir(res.data);
@@ -32,6 +27,15 @@ const Notes: React.FC<any> = () => {
         });
     }
   }, [router]);
+  const refreshData = async () => {
+    axios
+      .get<any>(
+        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/public/${id}`
+      )
+      .then((res) => {
+        setContent(res.data.content);
+      });
+  };
   const saveData = async () => {
     const data = {
       notesContent: editorRef.current.getContent(),
@@ -56,7 +60,13 @@ const Notes: React.FC<any> = () => {
         <title>{dbName} - Notes</title>
       </Head>
       <div className="m-3">
-        <h1 className="m-1 text-white font-bold text-3xl">{dbName}</h1>
+        <div className="flex items-center">
+          <h1 className="m-1 text-white font-bold text-3xl">{dbName}</h1>
+          &nbsp;&nbsp;
+          <span className="cursor-pointer text-white underline" onClick={refreshData}>
+            Refresh
+          </span>
+        </div>
         <Editor
           apiKey="agzgtq7qkh7q3bvkt9uwl0z9s5i2b9a3es4svjrstw2kf26g"
           onInit={(evt, editor) => (editorRef.current = editor)}
